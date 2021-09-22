@@ -86,7 +86,7 @@ onToggleLiked(id) {
             return items
         }
 
-        items.filter( (item) => {
+        return items.filter( (item) => {
             return item.label.indexOf(term) > -1
         });
     }
@@ -106,12 +106,13 @@ onToggleLiked(id) {
     onFilterSelect(filter) {
         this.setState({filter})
     }
+
     render() {
         const {data, term, filter} = this.state;
 
-        const liked = data.filter(item => item.like).length;
+        const liked = data.filter((item) => item.like).length;
         const allPosts = data.length;
-        const visiblePost = this.filterPost(this.searchPost(data, term), filter);
+        const visiblePosts = this.filterPost(this.searchPost(data, term), filter);
         return (
             <div className="app">
                 <AppHeader 
@@ -122,10 +123,10 @@ onToggleLiked(id) {
                         onUpdateSearch={this.onUpdateSearch} />
                     <PostStatusFilter
                     filter={filter}
-                    filterSelect={this.onFilterSelect}/>
+                    onFilterSelect={this.onFilterSelect}/>
                 </div>
                 <PostList 
-                posts={visiblePost}
+                posts={visiblePosts}
                 onDelete={this.deleteItem}
                 onToggleImportant={this.onToggleImportant}
                 onToggleLiked={this.onToggleLiked} />
